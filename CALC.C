@@ -55,7 +55,7 @@ void hidemouseptr();
 
 /* Default Theme */
 
-int themesno = 2;
+int themesno = 3;
 
 enum themes {
     DEFAULT_THEME =  0,
@@ -72,6 +72,8 @@ int ROUND_BUTTON1_COLOR = 34;
 int ROUND_BUTTON1_HOVER = WHITE;
 int RB_TEXT = WHITE;
 int RB_TEXT_HOVER = BLACK;
+int SRB_TEXT = WHITE;
+int SRB_TEXT_HOVER = BLACK;
 int SQUARE_BUTTON_COLOR = 20;
 int SQUARE_BUTTON_HOVER = 23;
 int SB_TEXT = WHITE;
@@ -79,7 +81,7 @@ int SB_TEXT_HOVER = WHITE;
 int SCREEN_COLOR = WHITE;
 int SCREEN_TEXT_COLOR = DARKGRAY;
 
-void setThemeName(const char* name){
+void setThemeName(const char* name) {
     sprintf(themename, "%s", name);
 }
 
@@ -98,37 +100,59 @@ void setTheme(int index) {
     hidemouseptr();
     switch(index) {
     case 0:                         //Default
-    setThemeName("Default");
-	BG_COLOR = 18;
-	ROUND_BUTTON_COLOR = 17;
-	ROUND_BUTTON_HOVER = WHITE;
-	ROUND_BUTTON1_COLOR = 34;
-	ROUND_BUTTON1_HOVER = WHITE;
-	RB_TEXT = WHITE;
-	RB_TEXT_HOVER = BLACK;
-	SQUARE_BUTTON_COLOR = 20;
-	SQUARE_BUTTON_HOVER = 23;
-	SB_TEXT = WHITE;
-	SB_TEXT_HOVER = WHITE;
-	SCREEN_COLOR = WHITE;
-	SCREEN_TEXT_COLOR = DARKGRAY;
-	break;
-    case 1:                         //Gray
-    setThemeName("Gray");
-	BG_COLOR = DARKGRAY;
-	ROUND_BUTTON_COLOR = DARKGRAY;
-	ROUND_BUTTON_HOVER = WHITE;
-	ROUND_BUTTON1_COLOR = 34;
-	ROUND_BUTTON1_HOVER = WHITE;
-	RB_TEXT = WHITE;
-	RB_TEXT_HOVER = DARKGRAY;
-	SQUARE_BUTTON_COLOR = LIGHTGRAY;
-	SQUARE_BUTTON_HOVER = DARKGRAY;
-	SB_TEXT = WHITE;
-	SB_TEXT_HOVER = WHITE;
-	SCREEN_COLOR = WHITE;
-	SCREEN_TEXT_COLOR = DARKGRAY;
-	break;
+        setThemeName("Default");
+        BG_COLOR = 18;
+        ROUND_BUTTON_COLOR = 17;
+        ROUND_BUTTON_HOVER = WHITE;
+        ROUND_BUTTON1_COLOR = 34;
+        ROUND_BUTTON1_HOVER = WHITE;
+        RB_TEXT = WHITE;
+        RB_TEXT_HOVER = BLACK;
+        SRB_TEXT = WHITE;
+        SRB_TEXT_HOVER = 34;
+        SQUARE_BUTTON_COLOR = 20;
+        SQUARE_BUTTON_HOVER = 23;
+        SB_TEXT = WHITE;
+        SB_TEXT_HOVER = WHITE;
+        SCREEN_COLOR = WHITE;
+        SCREEN_TEXT_COLOR = DARKGRAY;
+        break;
+    case 1:                         //Light
+        setThemeName("Light");
+        BG_COLOR = 29;
+        ROUND_BUTTON_COLOR = 25;
+        ROUND_BUTTON_HOVER = WHITE;
+        ROUND_BUTTON1_COLOR = 34;
+        ROUND_BUTTON1_HOVER = WHITE;
+        RB_TEXT = WHITE;
+        RB_TEXT_HOVER = DARKGRAY;
+        SRB_TEXT = WHITE;
+        SRB_TEXT_HOVER = 34;
+        SQUARE_BUTTON_COLOR = 27;
+        SQUARE_BUTTON_HOVER = 22;
+        SB_TEXT = 20;
+        SB_TEXT_HOVER = WHITE;
+        SCREEN_COLOR = 22;
+        SCREEN_TEXT_COLOR = 29;
+        break;
+    case 2:                         //Darcula
+        setThemeName("Darcula");
+        BG_COLOR = 18;
+        ROUND_BUTTON_COLOR = 17;
+        ROUND_BUTTON_HOVER = 12;
+        ROUND_BUTTON1_COLOR = 12;
+        ROUND_BUTTON1_HOVER = 64;
+        RB_TEXT = 12;
+        RB_TEXT_HOVER = WHITE;
+        SRB_TEXT = WHITE;
+        SRB_TEXT_HOVER = 17;
+        SQUARE_BUTTON_COLOR = 12;
+        SQUARE_BUTTON_HOVER = 64;
+        SB_TEXT = WHITE;
+        SB_TEXT_HOVER = 17;
+        SCREEN_COLOR = 23;
+        SCREEN_TEXT_COLOR = 12;
+        break;
     }
     showmouseptr();
 }
@@ -169,12 +193,12 @@ void setRectCoords(int index, char t, int x1, int y1, int x2, int y2) {
 
 void createCloseButton(int hover, int pressed) {
     if(hover) {
-	hidemouseptr();
-	setfillstyle(SOLID_FILL, LIGHTRED);
+        hidemouseptr();
+        setfillstyle(SOLID_FILL, LIGHTRED);
     } else if(pressed)
-	setfillstyle(SOLID_FILL, LIGHTMAGENTA);
+        setfillstyle(SOLID_FILL, LIGHTMAGENTA);
     else
-	setfillstyle(SOLID_FILL, RED);
+        setfillstyle(SOLID_FILL, RED);
     bar(RIGHT-75, TOP, RIGHT, APP_BAR_HEIGHT);
     setcolor(WHITE);
     settextstyle(SANS_SERIF_FONT, HORIZ_DIR,1);
@@ -204,7 +228,7 @@ void createAppBar() {
 
 /* Info Bar */
 
-void createInfoBar(){
+void createInfoBar() {
     setfillstyle(SOLID_FILL, 34);
     setcolor(WHITE);
     settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 1);
@@ -222,7 +246,6 @@ const char* toStr(double d) {
     return message;
 }
 
-
 void clearScreen() {
     setfillstyle(SOLID_FILL, SCREEN_COLOR);
     bar(LEFT+40, APP_BAR_HEIGHT+40, RIGHT-120, SCREEN_HEIGHT);
@@ -231,9 +254,11 @@ void clearScreen() {
 void setText(const char* text) {
     clearScreen();
     setcolor(SCREEN_TEXT_COLOR);
-    moveto(RIGHT-150-textwidth(text), SCREEN_HEIGHT-SCREEN_HEIGHT/2+10);
+    moveto(RIGHT-170, SCREEN_HEIGHT-SCREEN_HEIGHT/4);
+    settextjustify(2,0);
     settextstyle(SANS_SERIF_FONT, HORIZ_DIR,4);
     outtext(text);
+    settextjustify(0,2);
 }
 
 /* Button Matrix */
@@ -249,14 +274,13 @@ int padY;
 
 void hoverRoundButton(char text, int x, int y) {
     int FORE=ROUND_BUTTON_HOVER, BACK=ROUND_BUTTON_COLOR;
-    char str[1];
-    str[0]=text;
-    str[1]='\0';
+    char s[1];
+    sprintf(s, "%c", text);
     setcolor(RB_TEXT_HOVER);
     if(text=='.'||text=='=') {
-	FORE = ROUND_BUTTON1_HOVER;
-	BACK = ROUND_BUTTON1_COLOR;
-	setcolor(ROUND_BUTTON1_COLOR);
+        FORE = ROUND_BUTTON1_HOVER;
+        BACK = ROUND_BUTTON1_COLOR;
+        setcolor(SRB_TEXT_HOVER);
     }
     setfillstyle(SOLID_FILL, BACK);
     fillellipse(x, y, radius, radius);
@@ -264,19 +288,19 @@ void hoverRoundButton(char text, int x, int y) {
     fillellipse(x, y, radius, radius);
     moveto(x-padX+3, y-padY+2);
     settextstyle(SANS_SERIF_FONT, HORIZ_DIR,4);
-    outtext(str);
+    outtext(s);
 }
 
 
 void normalRoundButton(char text, int x, int y) {
     int FORE=ROUND_BUTTON_COLOR, BACK=ROUND_BUTTON_HOVER;
-    char str[1];
-    str[0]=text;
-    str[1]='\0';
+    char s[1];
+    sprintf(s, "%c", text);
     setcolor(RB_TEXT);
     if(text=='.'||text=='=') {
-	FORE = ROUND_BUTTON1_COLOR;
-	BACK = ROUND_BUTTON1_HOVER;
+        FORE = ROUND_BUTTON1_COLOR;
+        BACK = ROUND_BUTTON1_HOVER;
+        setcolor(SRB_TEXT);
     }
     setfillstyle(SOLID_FILL, BACK);
     fillellipse(x, y, radius, radius);
@@ -284,11 +308,10 @@ void normalRoundButton(char text, int x, int y) {
     fillellipse(x, y, radius-2, radius-2);
     moveto(x-padX+3, y-padY+2);
     settextstyle(SANS_SERIF_FONT, HORIZ_DIR,4);
-    outtext(str);
+    outtext(s);
 }
 
 void createRoundButton(char text, int x, int y, int id) {
-
     normalRoundButton(text, x, y);
     setCircCoords(id, text, x, y, radius);
 }
@@ -303,13 +326,13 @@ void createButtonMatrix() {
     padY = radius/2;
 
     for(j = 3; j > 0; j--) {
-	for(k = 3; k > 0; k--) {
-	    createRoundButton(getNumChar(i), x, y, i);
-	    x+=padding;
-	    i--;
-	}
-	x =  startX;
-	y += padding-50;
+        for(k = 3; k > 0; k--) {
+            createRoundButton(getNumChar(i), x, y, i);
+            x+=padding;
+            i--;
+        }
+        x =  startX;
+        y += padding-50;
     }
     createRoundButton('.', x, y, 11);           //ID of . is 11
     x+=padding;
@@ -323,7 +346,7 @@ void createButtonMatrix() {
 
 int side = 100;
 
-void squareButton(char text, int x, int y){
+void squareButton(char text, int x, int y) {
     char str[1];
     str[0] = text;
     str[1] = '\0';
@@ -345,13 +368,11 @@ void hoverSquareButton(char text, int x, int y) {
 }
 
 void createSquareButton(char text, int x, int y, int id) {
-    
     normalSquareButton(text, x, y);
     setRectCoords(id, text, x, y, x+side, y+side);
 }
 
 void createClearButton() {
-    
     /*Clear Button*/
     radius = 25;
     padX= 10, padY = 25;
@@ -449,16 +470,16 @@ int getreleaseevent() {
     return o.x.bx;
 }
 
-int prev = 10;
+int prev = 666;
 
 void hover(id) {
     hidemouseptr();
 
-    if(id==13){
+    if(id==13) {
         radius = 25;
         padX= 10, padY = 25;
     }
-    
+
     if(buttons[id].mode==RECT)
         hoverSquareButton(buttons[id].text, buttons[id].xMin, buttons[id].yMin);
     if(buttons[id].mode==CIRC)
@@ -508,19 +529,17 @@ void calc(int id) {
 
 void operation(int id) {
 
-    if(id==12) {
-	calc(id);
-    } else if(id==11) {
-	decimal_mode=1;
+    if(id==11) {
+        decimal_mode=1;
     } else if(id==13) {  //Clear
-	res=0;
-	input=0;
-	prevOp = 18;
-	decimal_mode = 0;
-	order=0.1;
-	setText(toStr(res));
+        res=0;
+        input=0;
+        prevOp = 18;
+        decimal_mode = 0;
+        order=0.1;
+        setText(toStr(res));
     } else {
-	calc(id);
+        calc(id);
     }
 
 }
@@ -529,7 +548,7 @@ void operation(int id) {
 /* Click Mapping */
 
 void clickLookup(int id) {
-    
+
     int doubleOp = (id>=15&&id<=18||id==12)&&(prev>=15&&prev<=18||prev==12);
     int equalClr = (prev==12&&(id>=0&&id<=9));
     prev = id;
@@ -540,25 +559,25 @@ void clickLookup(int id) {
 
     if(equalClr)
         operation(13);
-    
+
     if(doubleOp) {
-	   if(id!=12)
-	       prevOp=id;
-	return;
+        if(id!=12)
+            prevOp=id;
+        return;
     }
 
     if(id==10) {
-	createCloseButton(0, 1);
-	closeButton();
+        createCloseButton(0, 1);
+        closeButton();
     } else if(id>=0&&id<=9) {
-	if(decimal_mode) {
-	    input+=order*id;
-	    order/=10;
-	} else
-	    input=input*10+id;
-	setText(toStr(input));
+        if(decimal_mode) {
+            input+=order*id;
+            order/=10;
+        } else
+            input=input*10+id;
+        setText(toStr(input));
     } else if(id>=11&&id<=18) {
-	operation(id);
+        operation(id);
     }
 
 
@@ -568,9 +587,9 @@ void hoverLookup(int x, int y) {
     int id = whichButton(x, y);
 
     if(id==10) {
-	createCloseButton(1, 0);
+        createCloseButton(1, 0);
     } else
-	createCloseButton(0, 0);
+        createCloseButton(0, 0);
     showmouseptr();
 }
 
@@ -580,61 +599,55 @@ int roll=1;
 
 /* Handling Keyboard Interrupts */
 
+void onKeyPress(int key) {
+    clickLookup(key);
+    delay(150);
+    normalize(key);
+}
+
 int keypressed() {
     if(kbhit()) {
-	char key = getch();
-	if(key=='m') {
-	    if(roll>=themesno)
-		roll=0;
-	    setTheme(roll);
-	    roll++;
-	    makeCalculator();
-        showToast();
-	} else if(key>='0'&&key<='9'){
-        clickLookup(key-'0');
-        delay(150);
-        normalize(key-'0');
-    } else if (key=='+'){
-        clickLookup(18);
-        delay(150);
-        normalize(18);
-    } else if (key=='-'){
-        clickLookup(17);
-        delay(150);
-        normalize(17);
-    } else if (key=='*'){
-        clickLookup(16);
-        delay(150);
-        normalize(16);
-    } else if (key=='/'){
-        clickLookup(15);
-        delay(150);
-        normalize(15);
-    } else if (key=='='||key==13){
-        clickLookup(12);
-        delay(150);
-        normalize(12);
-    } else if (key==8){
-        clickLookup(13);
-        delay(150);
-        normalize(13);
-    } else if(key==27) {
-	    closeButton();
-	}
-	return (key==27);
+        char key = getch();
+        if(key=='m') {
+            if(roll>=themesno)
+                roll=0;
+            setTheme(roll);
+            roll++;
+            makeCalculator();
+            showToast();
+        } else if(key>='0'&&key<='9') {
+            onKeyPress(key-'0');
+        } else if (key=='+') {
+            onKeyPress(18);
+        } else if (key=='-') {
+            onKeyPress(17);
+        } else if (key=='*') {
+            onKeyPress(16);
+        } else if (key=='/') {
+            onKeyPress(15);
+        } else if (key=='='||key==13) {
+            onKeyPress(12);
+        } else if(key=='.') {
+            onKeyPress(11);
+        } else if (key==8) {
+            onKeyPress(13);
+        } else if(key==27) {
+            closeButton();
+        }
+        return (key==27);
     } else
-	return 0;
+        return 0;
 }
 
 void detect() {
     int x, y;
     while (!keypressed()) {
-	i.x.ax = 3;
-	getmousebuttons(&x, &y);
-	if (getpressevent()) clickLookup(whichButton(x, y));
-	if (getreleaseevent()) normalize(prev);
-	hoverLookup(x, y);
-	delay(100);
+        i.x.ax = 3;
+        getmousebuttons(&x, &y);
+        if (getpressevent()) clickLookup(whichButton(x, y));
+        if (getreleaseevent()) normalize(prev);
+        hoverLookup(x, y);
+        delay(100);
     }
 }
 
@@ -653,6 +666,31 @@ void makeCalculator() {
     createButtonMatrix();
     createOperationButtons();
     showmouseptr();
+}
+
+
+
+void splash() {
+    int tri1[8] = {0, 0,   0, 0,   0, 0,   0, 0};
+    tri1[2]=RIGHT;
+    tri1[5]=BOTTOM;
+
+    setfillstyle(SOLID_FILL, 56);
+    bar(LEFT, TOP, RIGHT, BOTTOM);
+    setfillstyle(SOLID_FILL, 34);
+    setcolor(34);
+    fillpoly(4, tri1);
+    setfillstyle(SOLID_FILL, 103);
+    setcolor(103);
+    pieslice(MID_X, MID_Y-100, 50, 320, 60);
+    settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 9);
+    outtextxy(MID_X+80, MID_Y-170, "++");
+    setcolor(WHITE);
+    settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 4);
+    outtextxy(MID_X-textwidth("Calculator++")/2, MID_Y, "Calculator++");
+    settextstyle(8, HORIZ_DIR, 2);
+    outtextxy(MID_X-textwidth("by iamareebjamal")/2, MID_Y+50, "by iamareebjamal");
+    delay(2000);
 }
 
 int huge Mode() {
@@ -676,10 +714,11 @@ int main() {
 
 
     if ( status == 0 )
-	printf("Mouse support not available.\n");
+        printf("Mouse support not available.\n");
     else {
-	makeCalculator();
-	setText("0");
+        splash();
+        makeCalculator();
+        setText("0");
         detect();
     }
 
