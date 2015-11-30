@@ -14,23 +14,23 @@ There are also 7 themes in-built in Calculator. And the style of design is metro
 
 #Screenshots
 
-##Default Theme
+###Default Theme
 ![Default](https://raw.githubusercontent.com/iamareebjamal/gui_calculator/master/Screenshots/1-default.png)
 
-##Darkula
-![Darkula](https://raw.githubusercontent.com/iamareebjamal/gui_calculator/master/Screenshots/1-default.png)
+###Darkula
+![Darkula](https://raw.githubusercontent.com/iamareebjamal/gui_calculator/master/Screenshots/2-darkula.png)
 
-##Emerald
+###Emerald
 ![Emerald](https://raw.githubusercontent.com/iamareebjamal/gui_calculator/master/Screenshots/3-emerald.png)
 
-##Blossom
+###Blossom
 ![Blossom](https://raw.githubusercontent.com/iamareebjamal/gui_calculator/master/Screenshots/4-blossom.png)
 
-##Sunrise
+###Sunrise
 ![Sunrise](https://raw.githubusercontent.com/iamareebjamal/gui_calculator/master/Screenshots/5-sunrise.png)
 
-##Sky
+###Sky
 ![Sky](https://raw.githubusercontent.com/iamareebjamal/gui_calculator/master/Screenshots/6-sky.png)
 
-##Light
+###Light
 ![Light](https://raw.githubusercontent.com/iamareebjamal/gui_calculator/master/Screenshots/7-light.png)
